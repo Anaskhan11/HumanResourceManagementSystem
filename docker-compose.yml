@@ -1,97 +1,26 @@
-version: '3'
+version: '3.8'
 
 services:
-  db1:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: hrms_userservices
-      MYSQL_USER: root
-     
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
     ports:
-      - "5000:4000"
-    volumes:
-      - mysql_data1:/var/lib/mysql
+      - "4000:3306"  # Map host port 4000 to container port 3306
+    networks:
+      - backend
 
-  db2:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: hrms_employeeservices
-      MYSQL_USER: root
-    
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
     ports:
-      - "5000:4000"
-    volumes:
-      - mysql_data2:/var/lib/mysql
-  db3:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: hrms_departmentservices
-      MYSQL_USER: root
-    
-    ports:
-      - "5000:4000"
-    volumes:
-      - mysql_data3:/var/lib/mysql
-  db4:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: hrms_postionservices
-      MYSQL_USER: root
-    
-    ports:
-      - "5000:4000"
-    volumes:
-      - mysql_data4:/var/lib/mysql
-  db5:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: hrms_leavemanagementservices
-      MYSQL_USER: root
-    
-    ports:
-      - "5000:4000"
-    volumes:
-      - mysql_data5:/var/lib/mysql
-  db6:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: hrms_projectservices
-      MYSQL_USER: root
-    
-    ports:
-      - "3307:3306"
-    volumes:
-      - mysql_data6:/var/lib/mysql
-  db7:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: hrms_payrollservices
-      MYSQL_USER: root
-    
-    ports:
-      - "5000:4000"
-    volumes:
-      - mysql_data7:/var/lib/mysql
+      - "5000:5000"  # Map host port 5000 to container port 5000
+    depends_on:
+      - mysql
+    networks:
+      - backend
 
-volumes:
-  mysql_data1:
-  mysql_data2:
-  mysql_data3:
-  mysql_data4:
-  mysql_data5:
-  mysql_data6:
-  mysql_data7:
+networks:
+  backend:
+    driver: bridge

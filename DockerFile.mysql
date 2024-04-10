@@ -1,0 +1,17 @@
+# Use official MySQL image as base
+FROM mysql:latest
+
+# Environment variables
+ENV MYSQL_ROOT_PASSWORD=""
+ENV DBNAME = hrms_userservices
+ENV DBEMPLOYEES = hrms_employeeservices
+ENV DBDEPARTMENTS = hrms_departmentservices
+ENV DBPOSITION = hrms_postionservices
+ENV DBLEAVES = hrms_leavemanagementservices
+ENV DBPROJECTS = hrms_projectservices
+ENV DBPAYROLL = hrms_payrollservices     
+ENV MYSQL_USER=root
+
+
+# Expose port 4000
+EXPOSE 4000
